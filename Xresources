@@ -1,30 +1,31 @@
 ! colors
+! Dark Grey, Grey Green
 *color0:  #3F3F3F
 *color8:  #709080
-
+! Red, Light Red
 *color1:  #705050
 *color9:  #DCA3A3
-
+! Green, Light Green
 *color2:  #60B48A
 *color10: #72D5A3
-
+! Skin, Tan
 *color3:  #DFAF8F
 *color11: #F0DFAF
-
+! Blue, Light Blue
 *color4:  #9AB8D7
 *color12: #94BFF3
-
+! Pink, Light Pink
 *color5:  #DC8CC3
 *color13: #EC93D3
-
+! Teal, Light Blue
 *color6:  #8CD0D3
 *color14: #93E0E3
-
+! Dull White, White
 *color7:  #DCDCCC
 *color15: #FFFFFF
-
-*background: #2C2C2C
+! Dull White, Dull Black
 *foreground: #DCDCCC
+*background: #2C2C2C
 
 ! font
 Xft.autohint: 0
@@ -33,12 +34,14 @@ Xft.hintstyle:  hintfull
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
-URxvt*font: xft:Droid Sans Mono:size=20, \
+URxvt.font: xft:Droid Sans Mono:size=20, \
             xft:WenQuanYi Zen Hei Mono:size=20, \
             xft:FreeSerif:style=Regular, \
             xft:Unifont:style=Medium:antialias=false
-
 ! URxvt.font: xft:Monaco:size=20
+
+! Set scrollbar style to rxvt, plain, next or xterm.
+URxvt.scrollstyle: plain
 
 ! Compile xft: Attempt to find a visual with the given bit depth; option -depth.
 ! URxvt*depth: bitdepth
@@ -150,8 +153,6 @@ URxvt*font: xft:Droid Sans Mono:size=20, \
 ! Specify a command pipe for vt100 printer [default lpr(1)]. Use Print to initiate a screen dump to the
 ! URxvt*print-pipe: string
 
-! Set scrollbar style to rxvt, plain, next or xterm. plain is the authors favourite.
-! URxvt*scrollstyle: mode
 
 ! Set the scrollbar width in pixels.
 ! URxvt*thickness: number
