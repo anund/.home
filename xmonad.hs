@@ -10,6 +10,7 @@
 import XMonad
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.DynamicLog
 import Data.Monoid
 import System.Exit
 
@@ -245,11 +246,23 @@ myLogHook = return ()
 myStartupHook = setWMName "LG3D"
 
 ------------------------------------------------------------------------
+-- Xmobar
+myBar = "xmobar"
+myPP = xmobarPP -- http://code.haskell.org/XMonadContrib/
+  { ppCurrent   = xmobarColor "#DCDCCC" "#2C2C2C" . wrap "<" ">" --Dull White
+  , ppVisible   = xmobarColor "#F0DFAF" "#2C2C2C" . wrap "(" ")" --Tan
+  , ppSep       = "   "
+  , ppTitle     = xmobarColor "#72D5A3" "#2C2C2C" --Light Green
+  }
+toggleStrutsKey XConfig { XMonad.modMask = modMask } = (modMask, xK_b)
+myXmobar = statusBar myBar myPP toggleStrutsKey
+
+------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad $ ewmh defaults
+main = xmonad =<< myXmobar (ewmh defaults)
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
