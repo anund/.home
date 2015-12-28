@@ -34,8 +34,10 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 if [ -f "$usexmonad" ]; then
-# QT relies on the DE env var in QT5, xmonad is not valid DE value
-    export QT_QPA_PLATFORMTHEME="qt5ct"
+# QT relies env vars in 5+ to find settings files
+    export XDG_CURRENT_DESKTOP="kde"
+# Alternatively qt5ct can be used to run without a full kde or gnome environment
+#    export QT_QPA_PLATFORMTHEME="qt5ct"
     exec xmonad
 else
     exec startkde
