@@ -11,6 +11,7 @@ import XMonad
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.DynamicLog
+import Graphics.X11.ExtraTypes.XF86
 import Data.Monoid
 import System.Exit
 
@@ -149,7 +150,24 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+    ++
 
+    --
+    -- function keys
+    [
+    -- brightness
+      ((noModMask,                xF86XK_MonBrightnessDown), spawn "xbacklight -dec 10%")
+    , ((noModMask,                xF86XK_MonBrightnessUp  ), spawn "xbacklight -inc 10%")
+
+    -- volume control
+    , ((noModMask,                xF86XK_AudioMute        ), spawn "pulseaudio-ctl mute")
+    , ((noModMask,                xF86XK_AudioLowerVolume ), spawn "pulseaudio-ctl down")
+    , ((noModMask,                xF86XK_AudioRaiseVolume ), spawn "pulseaudio-ctl up")
+
+    -- lock the screen
+    , ((myModMask .|. shiftMask,  xK_l                    ), spawn "~/.xmonad/hooks/lock")
+
+    ]
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -190,7 +208,8 @@ myLayout = tiled ||| Mirror tiled ||| Full
      nmaster = 1
 
      -- Default proportion of screen occupied by master pane
-     ratio   = 1/2
+     ratio   = 5/9
+     -- ratio   = 4/7
 
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100

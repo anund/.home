@@ -8,13 +8,13 @@ Config { font = "xft:Droid Sans Mono:size=16, \
        , commands = [ Run Date "%a %_d %b %Y  %H:%M" "date" 600
                     , Run Cpu ["-t","C <total>%",
                                "-L","10","-H","50",
-                               "--normal","#60B48A","--high","#705050"] 10
+                               "--normal","#60B48A","--high","#705050"] 50
                     , Run Memory ["-t","M <usedratio>%",
                                   "-L","40","-H","70",
-                                  "--normal","#60B48A","--high","#705050"] 10
+                                  "--normal","#60B48A","--high","#705050"] 50
                     , Run DynNetwork ["-t","<dev> <rx>Kb/s <tx>Kb/s",
                                       "-L","524288","-H","1572864",
-                                      "--normal","#60B48A","--high","#705050"] 10
+                                      "--normal","#60B48A","--high","#705050"] 50
                     , Run Battery ["-t", "<acstatus>"
                                   , "-l", "red"
                                   , "--", "-f", "ACAD/online"
