@@ -5,7 +5,7 @@ Config { font = "xft:Droid Sans Mono:size=16, \
        , fgColor = "#DCDCCC"
        , bgColor = "#2C2C2C"
        , position = Top
-       , commands = [ Run Date "%a %_d %b %Y  %H:%M" "date" 600
+       , commands = [ Run Date "%a %_d %b %H:%M" "date_now" 600
                     , Run Cpu ["-t","C <total>%",
                                "-L","10","-H","50",
                                "--normal","#60B48A","--high","#705050"] 50
@@ -19,13 +19,20 @@ Config { font = "xft:Droid Sans Mono:size=16, \
                                   , "-l", "red"
                                   , "--", "-f", "ACAD/online"
                                        -- discharging status
-                                       , "-o"	, "B <left>% (<timeleft>)"
+                                       , "-o"   , "B <left>% (<timeleft>)"
                                        -- AC "on" status
-                                       , "-O"	, "<fc=#8CD0D3>Charging</fc>"
+                                       , "-O"   , "<fc=#8CD0D3>Charging</fc>"
                                        -- charged status
-                                       , "-i"	, "<fc=#93E0E3>Charged</fc>"
+                                       , "-i"   , "<fc=#93E0E3>Charged</fc>"
+                                   ] 50
+                    , Run CoreTemp [ "--template" , "T <core0> <core1> <core2> <core3>"
+                                   , "--Low"      , "70"        -- units: °C
+                                   , "--High"     , "80"        -- units: °C
+                                   , "--low"      , "#60B484"
+                                   , "--normal"   , "#DFAF8F"
+                                   , "--high"     , "#93E0E3"
                                    ] 50
                     , Run StdinReader
                     ]
-       , template = " %StdinReader%  }{  %dynnetwork%   %cpu%   %memory%   %battery%   %date% "
+       , template = " %StdinReader%  }{  %dynnetwork%   %cpu%   %memory%   %battery%   %coretemp%   %date_now% "
        }
