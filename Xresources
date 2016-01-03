@@ -34,11 +34,11 @@ Xft.hintstyle:  hintfull
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
-URxvt.font: xft:Droid Sans Mono:size=20, \
-            xft:WenQuanYi Zen Hei Mono:size=20, \
+URxvt.font: xft:Droid Sans Mono:size=18, \
+            xft:WenQuanYi Zen Hei Mono:size=18, \
             xft:FreeSerif:style=Regular, \
             xft:Unifont:style=Medium:antialias=false
-! URxvt.font: xft:Monaco:size=20
+! URxvt.font: xft:Monaco:size=18
 
 ! Set scrollbar style to rxvt, plain, next or xterm.
 URxvt.scrollstyle: plain
