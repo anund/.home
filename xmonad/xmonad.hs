@@ -40,7 +40,7 @@ myBorderWidth   = 0
 -- ("right alt"), which does not conflict with emacs keybindings. The
 -- "windows key" is usually mod4Mask.
 --
-myModMask       = mod1Mask
+myModMask       = mod4Mask
 
 -- The default number of workspaces (virtual screens) and their names.
 -- By default we use numeric strings, but any string may be used as a
@@ -70,7 +70,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_p), spawn "dmenu_run -fn \"Droid Sans Mono\"-20")
 
     -- close focused window
-    , ((modm .|. shiftMask, xK_c     ), kill)
+    , ((modm,               xK_c     ), kill)
 
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
