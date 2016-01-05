@@ -22,3 +22,4 @@ ln -s ~/.home/Xresources .Xresources
 # X
 touch .startxmonad
 ln -sf ~/.home/xinitrc .xinitrc
+ln -sf ~/.home/.Xmodmap .Xmodmap

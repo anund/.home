@@ -64,10 +64,10 @@ myFocusedBorderColor = "#ff0000"
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
-    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+    [ ((modm,               xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
-    , ((modm, xK_p), spawn "dmenu_run -fn \"Droid Sans Mono\"-20")
+    , ((modm,               xK_p), spawn "dmenu_run -fn \"Droid Sans Mono\"-20")
 
     -- close focused window
     , ((modm,               xK_c     ), kill)
@@ -88,19 +88,19 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_j     ), windows W.focusDown)
 
     -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm,               xK_k     ), windows W.focusUp)
 
     -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster  )
+    , ((modm,               xK_m     ), windows W.focusMaster)
 
     -- Swap the focused window and the master window
-    , ((modm,               xK_Return), windows W.swapMaster)
+    , ((modm .|. shiftMask, xK_Return), windows W.swapMaster)
 
     -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown)
 
     -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp)
 
     -- Shrink the master area
     , ((modm,               xK_h     ), sendMessage Shrink)
@@ -150,21 +150,21 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- function keys
     [
     -- brightness
-      ((noModMask,                xF86XK_MonBrightnessDown), spawn "xbacklight -dec 10%")
-    , ((noModMask,                xF86XK_MonBrightnessUp  ), spawn "xbacklight -inc 10%")
+      ((noModMask,          xF86XK_MonBrightnessDown), spawn "xbacklight -dec 10%")
+    , ((noModMask,          xF86XK_MonBrightnessUp  ), spawn "xbacklight -inc 10%")
 
     -- volume control
-    , ((noModMask,                xF86XK_AudioMute        ), spawn "pulseaudio-ctl mute")
-    , ((noModMask,                xF86XK_AudioLowerVolume ), spawn "pulseaudio-ctl down")
-    , ((noModMask,                xF86XK_AudioRaiseVolume ), spawn "pulseaudio-ctl up")
+    , ((noModMask,          xF86XK_AudioMute        ), spawn "pulseaudio-ctl mute")
+    , ((noModMask,          xF86XK_AudioLowerVolume ), spawn "pulseaudio-ctl down")
+    , ((noModMask,          xF86XK_AudioRaiseVolume ), spawn "pulseaudio-ctl up")
 
     -- lock the screen
-    , ((myModMask .|. shiftMask,  xK_l                    ), spawn "~/.xmonad/hooks/lock")
+    , ((modm .|. shiftMask, xK_l                    ), spawn "~/.xmonad/hooks/lock")
 
     -- amarok playback
-    , ((noModMask,                xF86XK_AudioPlay        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
-    , ((noModMask,                xF86XK_AudioNext        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
-    , ((noModMask,                xF86XK_AudioPrev        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
+    , ((noModMask,          xF86XK_AudioPlay        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
+    , ((noModMask,          xF86XK_AudioNext        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
+    , ((noModMask,          xF86XK_AudioPrev        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
 
     ]
 
