@@ -43,6 +43,9 @@ URxvt.font: xft:Droid Sans Mono:size=18, \
 ! Set scrollbar style to rxvt, plain, next or xterm.
 URxvt.scrollstyle: plain
 
+! scrollback
+URxvt.saveLines: 65535
+
 ! Compile xft: Attempt to find a visual with the given bit depth; option -depth.
 ! URxvt*depth: bitdepth
 
