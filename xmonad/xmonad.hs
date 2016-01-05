@@ -117,12 +117,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
-    -- Toggle the status bar gap
-    -- Use this binding with avoidStruts from Hooks.ManageDocks.
-    -- See also the statusBar function from Hooks.DynamicLog.
-    --
-    -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
-
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
@@ -166,6 +160,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- lock the screen
     , ((myModMask .|. shiftMask,  xK_l                    ), spawn "~/.xmonad/hooks/lock")
+
+    -- amarok playback
+    , ((noModMask,                xF86XK_AudioPlay        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
+    , ((noModMask,                xF86XK_AudioNext        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
+    , ((noModMask,                xF86XK_AudioPrev        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
 
     ]
 
