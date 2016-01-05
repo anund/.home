@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e -v -o pipefail
+
+cd ~
+
+# directories
+rm -rf .vim; ln -sf ~/.home/vim .vim
+
+# git
+ln -s ~/.home/git/gitconfig .gitconfig
+ln -s ~/.home/git/gitignore_global .gitignore_global
+
+# xmonad
+ln -s ~/.home/xmonad/xmobarrc .xmobarrc
+mkdir .xmonad
+ln -s ~/.home/xmonad/xmonad.hs .xmonad/xmonad.hs
+
+# uxrvt
+ln -s ~/.home/Xdefaults .Xdefaults
+ln -s ~/.home/Xresources .Xresources
+
+# X
+touch .startxmonad
+ln -sf ~/.home/xinitrc .xinitrc
