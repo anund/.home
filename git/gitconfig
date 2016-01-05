@@ -1,7 +1,9 @@
 [core]
-	excludesfile = /home/backup/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [user]
 	email = anund@gmail.com
 	name = Anund
 [push]
 	default = simple
+[merge]
+	tool = vimdiff
