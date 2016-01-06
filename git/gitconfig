@@ -4,6 +4,6 @@
 	email = anund@gmail.com
 	name = Anund
 [push]
-	default = simple
+	default = current
 [merge]
 	tool = vimdiff
