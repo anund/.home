@@ -39,3 +39,6 @@ touch .startxmonad
 ln -sf ~/.home/xinitrc .xinitrc
 ln -sf ~/.home/.Xmodmap .Xmodmap
 sudo cp ~/.home/xrandr/60-detect-dpi.sh /etc/X11/xinit/xinitrc.d/60-detect-dpi.sh
+
+# intel
+sudo cp ~/.home/20-intel.conf /etc/X11/xorg.conf.d/20-intel.conf
