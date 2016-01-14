@@ -1,6 +1,18 @@
 #!/bin/bash
 set -e -v -o pipefail
 
+cd "$(dirname "$0")"
+
+# prezto
+git submodule update --init --recursive
+cd prezto
+git checkout custom
+ln -sf ~/.home/prezto ~/.zprezto
+setopt EXTENDED_GLOB
+for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+done
+
 cd ~
 
 # directories
@@ -26,3 +38,4 @@ ln -s ~/.home/Xresources .Xresources
 touch .startxmonad
 ln -sf ~/.home/xinitrc .xinitrc
 ln -sf ~/.home/.Xmodmap .Xmodmap
+sudo cp ~/.home/xrandr/60-detect-dpi.sh /etc/X11/xinit/xinitrc.d/60-detect-dpi.sh
