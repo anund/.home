@@ -29,7 +29,7 @@ ln -s ~/.home/xmonad/xmonad.hs .xmonad/xmonad.hs
 ln -s ~/.home/xmonad/lock.sh .xmonad/hooks/lock
 
 # urxvt
-mkdir -p ~/.urxvt/perl
+mkdir -p ~/.urxvt/ext
 ln -s ~/.home/urxvt/focus ~/.urxvt/perl/focus
 ln -s ~/.home/Xdefaults .Xdefaults
 ln -s ~/.home/Xresources .Xresources
