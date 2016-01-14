@@ -34,6 +34,9 @@ syntax on
 let mapleader=","
 let maplocalleader="\\"
 
+" save on lost focus
+:au FocusLost * silent! update
+
 " Leader key timeout
 set tm=2000
 
@@ -138,8 +141,6 @@ inoremap jj <ESC>
 nnoremap ; :
 nnoremap <leader>; ;
 
-au FocusLost * :wa              " save on lost focus
-
 " Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
 " yanked stack (also, in visual mode)
 nnoremap <silent> <leader>d "_d
@@ -172,3 +173,17 @@ map <leader>ss :setlocal spell!<cr>
 
 " powerline
 let $PYTHONPATH='/usr/lib/python3.5/site-packages'
+
+" Signal focus mode on
+exe 'silent !echo -ne "\033]777;focus;on\007"'
+
+set <S-F1>=^[[UlFocusIn
+set <S-F2>=^[[UlFocusOut
+" react to focusin focusout for urxvt
+map <silent> <S-F1> :bufdo checktime<CR>
+map <silent> <S-F2> :wa!<CR>
+map! <silent> <S-F1> <esc>:bufdo checktime<CR>
+map! <silent> <S-F2> <esc>:wa!<CR>
+
+" Signal focus mode off
+autocmd VimLeavePre * exe 'silent !echo -ne "\033]777;focus;off\007"'

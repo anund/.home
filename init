@@ -16,7 +16,9 @@ mkdir -p .xmonad/hooks
 ln -s ~/.home/xmonad/xmonad.hs .xmonad/xmonad.hs
 ln -s ~/.home/xmonad/lock.sh .xmonad/hooks/lock
 
-# uxrvt
+# urxvt
+mkdir -p ~/.urxvt/perl
+ln -s ~/.home/urxvt/focus ~/.urxvt/perl/focus
 ln -s ~/.home/Xdefaults .Xdefaults
 ln -s ~/.home/Xresources .Xresources
 

@@ -46,6 +46,12 @@ URxvt.scrollstyle: plain
 ! scrollback
 URxvt.saveLines: 65535
 
+! enable focus extention
+URxvt.perl-ext-common: focus
+
+URxvt*iso14755: False
+URxvt*iso14755_52: False
+
 ! Compile xft: Attempt to find a visual with the given bit depth; option -depth.
 ! URxvt*depth: bitdepth
 

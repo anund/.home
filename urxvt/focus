@@ -1,0 +1,35 @@
+#!/usr/bin/perl
+
+# hook invoked when urxvt starts
+sub on_start {
+  my($term) = @_;
+  # mode "focus" is disabled by default
+  $term->{focus_activated} = 0;
+}
+
+# intercept control sequence "OSC 777 xxx BEL"
+sub on_osc_seq_perl {
+  my ($term, $osc, $resp) = @_;
+  return unless $osc =~ s/^focus;//;
+  $term->{focus_activated} = $osc eq 'on'?1:0;
+}
+
+# hook invoked on gaining focus
+sub on_focus_in {
+  my($term) = @_;
+
+  # if focus mode is activated fire control sequence 
+  if ($term->{focus_activated}) {
+    $term->tt_write("^[[UlFocusIn");
+  }
+}
+
+# hook invoked on losing focus
+sub on_focus_out {
+  my($term) = @_;
+
+  # if focus mode is activated fire control sequence
+  if ($term->{focus_activated}) {
+    $term->tt_write("^[[UlFocusOut");
+  }
+}
