@@ -1,3 +1,4 @@
+{-# LANGUAGE ScopedTypeVariables #-}
 --
 -- xmonad example config file.
 --
@@ -14,9 +15,13 @@ import XMonad.Hooks.DynamicLog
 import Graphics.X11.ExtraTypes.XF86
 import Data.Monoid
 import System.Exit
+import XMonad.Layout.ThreeColumns
+import XMonad.Layout.MultiColumns
 
 import qualified XMonad.StackSet as W
-import qualified Data.Map        as M
+import qualified Data.Map        as Map
+import qualified Data.List       as L
+import qualified Data.Maybe      as M
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -57,17 +62,19 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 --
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
+--tttt =  zip (XMonad.workspaces XConfig) [xK_1 .. xK_9]
+
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+myKeys conf@(XConfig {XMonad.modMask = modm}) = Map.fromList $
 
     -- launch a terminal
     [ ((modm,               xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
-    , ((modm,               xK_p), spawn "dmenu_run -fn \"Droid Sans Mono\"-20")
+    , ((modm,               xK_p), spawn "dmenu_run")
 
     -- close focused window
     , ((modm,               xK_c     ), kill)
@@ -136,6 +143,22 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
+    -- One hand controls
+    -- Move to previous workspace
+    [ ((modm              , xK_Left),
+        windows $ \s -> W.greedyView (prevWs (W.currentTag s) s) s)
+
+    -- Move to next workspace
+    , ((modm              , xK_Right),
+        windows $ \s -> W.greedyView (nextWs (W.currentTag s) s) s)
+
+    -- Move focus to the next window
+    , ((modm,               xK_Up     ), windows W.focusDown)
+
+    -- Move focus to the previous window
+    , ((modm,               xK_Down     ), windows W.focusUp)
+    ]
+    ++
 
     --
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
@@ -150,28 +173,56 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- function keys
     [
     -- brightness
-      ((noModMask,          xF86XK_MonBrightnessDown), spawn "xbacklight -dec 10%")
+      ((noModMask,          xF86XK_MonBrightnessDown), spawn "xbacklight -set 1")
     , ((noModMask,          xF86XK_MonBrightnessUp  ), spawn "xbacklight -inc 10%")
 
     -- volume control
-    , ((noModMask,          xF86XK_AudioMute        ), spawn "pulseaudio-ctl mute")
-    , ((noModMask,          xF86XK_AudioLowerVolume ), spawn "pulseaudio-ctl down")
-    , ((noModMask,          xF86XK_AudioRaiseVolume ), spawn "pulseaudio-ctl up")
+    , ((noModMask,          xF86XK_AudioMute        ), spawn "amixer set Master toggle")
+    , ((noModMask,          xF86XK_AudioLowerVolume ), spawn "amixer set Master 5%-")
+    , ((noModMask,          xF86XK_AudioRaiseVolume ), spawn "amixer set Master 5%+")
 
     -- lock the screen
     , ((modm .|. shiftMask, xK_l                    ), spawn "~/.xmonad/hooks/lock")
 
     -- amarok playback
-    , ((noModMask,          xF86XK_AudioPlay        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
-    , ((noModMask,          xF86XK_AudioNext        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
-    , ((noModMask,          xF86XK_AudioPrev        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
+--    , ((noModMask,          xF86XK_AudioPlay        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
+--    , ((noModMask,          xF86XK_AudioNext        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
+--    , ((noModMask,          xF86XK_AudioPrev        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
 
+    , ((noModMask,          xF86XK_AudioPlay        ), spawn "mpc toggle")
+    , ((noModMask,          xF86XK_AudioNext        ), spawn "mpc next")
+    , ((noModMask,          xF86XK_AudioPrev        ), spawn "mpc prev")
     ]
+
+prevWs :: String -> W.StackSet String l a s sd -> String
+prevWs t s = show next
+    where
+        allowed = active s
+        curr = currentIndex t
+        next | curr == (head allowed) = last allowed
+             | otherwise = last $ takeWhile (< curr) allowed
+
+nextWs :: String -> W.StackSet String l a s sd -> String
+nextWs t s = show prev
+    where
+        allowed = active s
+        curr = currentIndex t
+        tail = dropWhile (<= curr) allowed
+        prev | null tail  = head allowed
+             | otherwise = head tail
+
+active :: (Read a, Ord a) => W.StackSet String l a1 s sd -> [a]
+active stackSet = L.sort $ map (read . W.tag) activeScreens
+    where activeScreens = L.filter (M.isJust . W.stack) (W.workspaces stackSet)
+
+currentIndex :: String -> Int
+currentIndex s = 1 + M.fromMaybe 0 (L.findIndex (== s) myWorkspaces)
+
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
 --
-myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
+myMouseBindings (XConfig {XMonad.modMask = modm}) = Map.fromList $
 
     -- mod-button1, Set the window to floating mode and move by dragging
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
@@ -198,6 +249,10 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
+multi = Mirror (multiCol [8,8,8,8,8] 2 0.01 (-0.25))
+multi2 = multiCol [5,5,5,5,5,5,5,5] 2 0.01 (-0.25)
+three = Mirror (ThreeCol 1 (3/100) (1/3))
+--myLayout = multi ||| multi2
 myLayout = tiled ||| Mirror tiled ||| Full
   where
      -- default tiling algorithm partitions the screen into two panes
@@ -243,7 +298,7 @@ myManageHook = composeAll
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
-myEventHook = handleEventHook defaultConfig <+> fullscreenEventHook
+myEventHook = handleEventHook def <+> fullscreenEventHook
 
 ------------------------------------------------------------------------
 -- Status bars and logging

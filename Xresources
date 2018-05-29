@@ -35,13 +35,19 @@ Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
 URxvt.font: \
-            xft:Droid Sans Mono:size=18, \
+            xft:Roboto Mono:size=8, \
             xft:FreeSerif:style=Regular, \
             xft:Unifont:style=Medium:antialias=false, \
-            xft:WenQuanYi Zen Hei Mono:size=18
+            xft:WenQuanYi Zen Hei Mono:size=8
 
 ! Set scrollbar style to rxvt, plain, next or xterm.
-URxvt.scrollstyle: plain
+URxvt*scrollstyle: plain
+! do not scroll with output
+URxvt*scrollTtyOutput: false
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+URxvt*scrollWithBuffer: true
+! scroll back to the bottom on keypress
+URxvt*scrollTtyKeypress: true
 
 ! scrollback
 URxvt.saveLines: 65535
@@ -51,4 +57,3 @@ URxvt.perl-ext-common: focus
 
 URxvt*iso14755: False
 URxvt*iso14755_52: False
-

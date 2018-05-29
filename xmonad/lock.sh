@@ -1,5 +1,13 @@
-#!/bin/bash
+#!/bin/sh
 
-pulseaudio-ctl mute
+readonly mute=$(amixer get Master | grep '\[on\]')
+
+if [ "$mute" ]; then
+  amixer set Master mute
+fi
+
 xsecurelock auth_pam_x11 saver_blank
-pulseaudio-ctl mute
+
+if [ "$mute" ]; then
+  amixer set Master unmute
+fi

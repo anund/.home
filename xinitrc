@@ -35,9 +35,16 @@ fi
 
 if [ -f "$usexmonad" ]; then
 # QT relies env vars in 5+ to find settings files
-    export XDG_CURRENT_DESKTOP="kde"
+#    export XDG_CURRENT_DESKTOP="kde"
 # Alternatively qt5ct can be used to run without a full kde or gnome environment
-#    export QT_QPA_PLATFORMTHEME="qt5ct"
+    export QT_QPA_PLATFORMTHEME="qt5ct"
+
+    #dpi
+    xrandr --dpi 250
+    #backgoud
+    feh --bg-scale ~/.home/background.jpg
+    #lock on suspend
+    xss-lock -- ~/.home/xmonad/lock.sh &
     exec xmonad
 else
     exec startkde
