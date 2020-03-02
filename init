@@ -3,30 +3,27 @@ set -e -v -o pipefail
 
 cd "$(dirname "$0")"
 
-# prezto
-git submodule update --init --recursive
-cd prezto
-git checkout custom
-ln -sf ~/.home/prezto ~/.zprezto
-setopt EXTENDED_GLOB
-for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-done
-
-cd ~
+# zim
+# Copy https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh to ~/.zim/zimfw.zsh
+ln -s ~/.home/zim/zimrc ~/.zimrc
+ln -s ~/.home/zim/zlogin ~/.zlogin
+ln -s ~/.home/zim/zshenv ~/.zshenv
+ln -s ~/.home/zim/zshrc ~/.zshrc
 
 # directories
-rm -rf .vim; ln -sf ~/.home/vim .vim
+# stop if exists? rm -rf .vim;
+ln -s ~/.home/vim/vimrc ~/.vimrc
+mkdir -p ~/.vim/{autoload,swap,undo}
+ln -s ~/.home/vim/autoload/pathogen.vim ~/.vim/autoload/pathogen.vim
 
 # git
 ln -s ~/.home/git/gitconfig .gitconfig
 ln -s ~/.home/git/gitignore_global .gitignore_global
 
 # xmonad
-ln -s ~/.home/xmonad/xmobarrc .xmobarrc
-mkdir -p .xmonad/hooks
-ln -s ~/.home/xmonad/xmonad.hs .xmonad/xmonad.hs
-ln -s ~/.home/xmonad/lock.sh .xmonad/hooks/lock
+ln -s ~/.home/xmonad/xmobarrc ~/.xmobarrc
+mkdir -p .xmonad
+ln -s ~/.home/xmonad/xmonad.hs ~/.xmonad/xmonad.hs
 
 # urxvt
 mkdir -p ~/.urxvt/ext

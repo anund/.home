@@ -1,6 +1,6 @@
-Config { font = "xft:Roboto Mono:size=8:antialias=true,\
-		\xft:FreeSerif:size=8:style=Regular,\
-		\xft:Unifont:size=8:antialias=false,\
+Config { font = "xft:Roboto Mono:size=12:antialias=true,\
+		\xft:FreeSerif:size=12:style=Regular,\
+		\xft:Unifont:size=12:antialias=false,\
 		\xft:WenQuanYi Zen Hei Mono:size=8"
        , fgColor = "#DCDCCC"
        , bgColor = "#2C2C2C"
@@ -35,7 +35,7 @@ Config { font = "xft:Roboto Mono:size=8:antialias=true,\
                                   -- charged status
                                   , "-i" , "<fc=#93E0E3>⚡</fc>"
                                    ] 50
-                    , Run CoreTemp [ "--template" , "T <core0> <core1> <core2> <core3>"
+                    , Run CoreTemp [ "--template" , "T <core0> <core1> <core2> <core3> <core4> <core5> <core6>"
                                    , "--Low"      , "70"        -- units: °C
                                    , "--High"     , "80"        -- units: °C
                                    , "--low"      , "#60B484"
@@ -45,12 +45,12 @@ Config { font = "xft:Roboto Mono:size=8:antialias=true,\
                     , Run StdinReader
                     , Run Volume "default" "Master" [
                                    "--template" , "<status><volumevbar><status>"
-				 , "--"
+                                 , "--"
                                  , "--on"       , ""
                                  , "--off"      , "|"
                                  , "-c"         , "#93E0E3"
                                  --, "--volume-icon-pattern", "<icon=vol%%.xpm/>"
-                                 ] 50
+                                 ] 10
                     ]
        , template = " %StdinReader%  }{  %cpu%  %memory%  %coretemp% %battery% %dynnetwork% %default:Master% %date_now% "
        }

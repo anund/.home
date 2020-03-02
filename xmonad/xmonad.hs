@@ -72,9 +72,17 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = Map.fromList $
 
     -- launch a terminal
     [ ((modm,               xK_Return), spawn $ XMonad.terminal conf)
+    , ((controlMask,        xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
     , ((modm,               xK_p), spawn "dmenu_run")
+    , ((controlMask,        xK_p), spawn "dmenu_run")
+
+    -- launch firefox
+    , ((modm .|. shiftMask, xK_f), spawn "firefox")
+
+    -- launch dolphin
+    , ((modm .|. shiftMask, xK_d), spawn "dolphin")
 
     -- close focused window
     , ((modm,               xK_c     ), kill)
@@ -145,18 +153,18 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = Map.fromList $
     ++
     -- One hand controls
     -- Move to previous workspace
-    [ ((modm              , xK_Left),
+    [ ((controlMask       , xK_Left),
         windows $ \s -> W.greedyView (prevWs (W.currentTag s) s) s)
 
     -- Move to next workspace
-    , ((modm              , xK_Right),
+    , ((controlMask       , xK_Right),
         windows $ \s -> W.greedyView (nextWs (W.currentTag s) s) s)
 
     -- Move focus to the next window
-    , ((modm,               xK_Up     ), windows W.focusDown)
+    , ((controlMask       , xK_Up     ), windows W.focusDown)
 
     -- Move focus to the previous window
-    , ((modm,               xK_Down     ), windows W.focusUp)
+    , ((controlMask       , xK_Down     ), windows W.focusUp)
     ]
     ++
 
@@ -174,7 +182,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = Map.fromList $
     [
     -- brightness
       ((noModMask,          xF86XK_MonBrightnessDown), spawn "xbacklight -set 1")
-    , ((noModMask,          xF86XK_MonBrightnessUp  ), spawn "xbacklight -inc 10%")
+    , ((noModMask,          xF86XK_MonBrightnessUp  ), spawn "xbacklight -inc 10")
 
     -- volume control
     , ((noModMask,          xF86XK_AudioMute        ), spawn "amixer set Master toggle")
@@ -182,7 +190,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = Map.fromList $
     , ((noModMask,          xF86XK_AudioRaiseVolume ), spawn "amixer set Master 5%+")
 
     -- lock the screen
-    , ((modm .|. shiftMask, xK_l                    ), spawn "~/.xmonad/hooks/lock")
+    , ((modm .|. shiftMask, xK_l                    ), spawn "xset s activate")
 
     -- amarok playback
 --    , ((noModMask,          xF86XK_AudioPlay        ), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.amarok /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
